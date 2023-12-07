@@ -1,0 +1,11 @@
+@startuml ErrorLogic
+state "ErrorLogic State" as Chickensoft_LogicBlocks_Tests_Fixtures_ErrorLogic_State {
+  state "StateA" as Chickensoft_LogicBlocks_Tests_Fixtures_ErrorLogic_State_StateA
+  state "StateB" as Chickensoft_LogicBlocks_Tests_Fixtures_ErrorLogic_State_StateB
+}
+
+Chickensoft_LogicBlocks_Tests_Fixtures_ErrorLogic_State_StateA --> Chickensoft_LogicBlocks_Tests_Fixtures_ErrorLogic_State_StateB : GoToB
+Chickensoft_LogicBlocks_Tests_Fixtures_ErrorLogic_State_StateB --> Chickensoft_LogicBlocks_Tests_Fixtures_ErrorLogic_State_StateA : GoToA
+
+[*] --> Chickensoft_LogicBlocks_Tests_Fixtures_ErrorLogic_State_StateA
+@enduml

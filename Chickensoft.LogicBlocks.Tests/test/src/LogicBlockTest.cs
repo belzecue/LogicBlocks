@@ -405,4 +405,31 @@ public class LogicBlockTest {
 
     Should.Throw<InvalidOperationException>(() => context.Get<string>());
   }
+
+  [Fact]
+  public void ErrorDoesNotBreakEntranceExitHandlers() {
+    var logic = new ErrorLogic();
+    logic.Value.ShouldBeOfType<ErrorLogic.State.StateA>();
+
+    logic.Start();
+
+    // The input handler on StateA will throw an error, preventing the state
+    // from changing to State B.
+    logic.Input(new ErrorLogic.Input.GoToB(ShouldThrow: true));
+
+    logic.Value.Updates.ShouldBe(new string[] {
+      "Enter State",
+      "Enter StateA",
+    });
+
+    // This will actually change the state to StateB.
+    logic.Input(new ErrorLogic.Input.GoToB(ShouldThrow: false));
+
+    logic.Value.Updates.ShouldBe(new string[] {
+      "Enter State",
+      "Enter StateA",
+      "Exit StateA",
+      "Enter StateB",
+    });
+  }
 }
